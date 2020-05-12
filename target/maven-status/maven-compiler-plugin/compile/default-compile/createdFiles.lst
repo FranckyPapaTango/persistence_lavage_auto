@@ -1,0 +1,14 @@
+mgw\persistence_lavage_auto\services\CommandeService.class
+mgw\persistence_lavage_auto\repository\FactureRepository.class
+mgw\persistence_lavage_auto\services\LaveurService.class
+mgw\persistence_lavage_auto\repository\AdminnRepository.class
+mgw\persistence_lavage_auto\services\AdminnService.class
+mgw\persistence_lavage_auto\repository\LaveurRepository.class
+mgw\persistence_lavage_auto\services\ClientService.class
+mgw\persistence_lavage_auto\repository\CommandeRepository.class
+mgw\persistence_lavage_auto\services\PrestationService.class
+mgw\persistence_lavage_auto\repository\PrestationRepository.class
+mgw\persistence_lavage_auto\repository\TvaRepository.class
+mgw\persistence_lavage_auto\repository\ClientRepository.class
+mgw\persistence_lavage_auto\services\InitDbService.class
+mgw\persistence_lavage_auto\services\FactureService.class
