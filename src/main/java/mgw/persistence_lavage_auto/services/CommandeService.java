@@ -67,9 +67,9 @@ public class CommandeService {
             Commande commande,//from web view fields
             Commande com) {//from original in DB
         if (commande == null && com != null) {//cas d'update "direct" à partir de la base originale com 
-            commandeRepository.save(com);
+            commandeRepository.saveAndFlush(com);
         } else if (com == null) {//cas de creation : com est inexistant car il est à créer par saisies nouvelles
-            commandeRepository.save(commande);
+            commandeRepository.saveAndFlush(commande);
         } else {//cas d'update
             this.commande = com;//update Commande(libelleCommande, annee, dateDeb, dateFin, detail, paypalId, prix1, prix2, moduleCollection, tjSInscrireCollection);
             com.setCreneauHoraireF(commande.getCreneauHoraireF());
@@ -79,12 +79,14 @@ public class CommandeService {
             com.setUpdatedVersionDate(commande.getUpdatedVersionDate());
             com.setCssRawColorCode(commande.getCssRawColorCode());
 
-            com.setIdClient(commande.getIdClient());
+            com.setUtilisateurId(commande.getUtilisateurId());
             com.setIdCommande(commande.getIdCommande());
-            com.setIdLaveur(commande.getIdLaveur());
+            com.setUtiUtilisateurId(commande.getUtiUtilisateurId());
             com.setIdPrestation(commande.getIdPrestation());
 //            com.setFactureCollection(commande.getFactureCollection());
 //            com.setFormulePrestation(commande.getFormulePrestation());
+            commandeRepository.saveAndFlush(com);
+            commandeRepository.flush();
 
         }
     }
@@ -103,6 +105,12 @@ public class CommandeService {
 //        Page<Commande> pagem = new PageImpl<>(liste, pageable, liste.size());
 //        return pagem;
 //    }
+    /**
+     * *
+     *
+     * pour user non connecté
+    **
+     */
     public Page<Commande> findCommandeByKeyWord(String search, int p, int s) {
         Pageable pageable = new PageRequest(p, s);
         List<Commande> liste = (List<Commande>) commandeRepository.findCommandeByKeyWord(search);
@@ -110,23 +118,32 @@ public class CommandeService {
         return pagem;
     }
 
-    public Page<Commande> findCommandeOfLaveurByKeyWord(long id, String search, int p, int s) {
+    /**
+     * *
+     *
+     * pour user connecté
+    **
+     */
+    public Page<Commande> findCommandeOfUtilisateurByKeyWord(long id, String search, int p, int s) {
         Pageable pageable = new PageRequest(p, s);
-        List<Commande> liste = (List<Commande>) commandeRepository.findCommandeOfLaveurByKeyWord(id, search);
+        List<Commande> liste = (List<Commande>) commandeRepository.findCommandeOfUtilisateurByKeyWord(id, search);
         Page<Commande> pagem = new PageImpl<>(liste, pageable, liste.size());
         return pagem;
     }
-
-    public Page<Commande> findAllCommandeOfLaveurPage(long id, int p, int s) {
+    /***
+     * Deux méthodes équivalentes
+     * pour user non connecté
+    ***/
+    public Page<Commande> findAllCommandeOfUtilisateurPage(long id, int p, int s) {
         Pageable pageable = new PageRequest(p, s);
-        List<Commande> liste = (List<Commande>) commandeRepository.findAllCommandeOfLaveur(id);
+        List<Commande> liste = (List<Commande>) commandeRepository.findAllCommandeOfUtilisateur(id);
         Page<Commande> pagem = new PageImpl<>(liste, pageable, liste.size());
         return pagem;
     }// Cette méthode est équivalente à celle qui suit :
 
-    public Page<Commande> findByIdLaveurPage(long id, int p, int s) {
+    public Page<Commande> findByIdUtilisateurPage(long id, int p, int s) {
         Pageable pageable = new PageRequest(p, s);
-        List<Commande> liste = (List<Commande>) commandeRepository.findCommandeByIdLaveur(id);
+        List<Commande> liste = (List<Commande>) commandeRepository.findAllCommandeOfUtilisateur(id);
         Page<Commande> pagem = new PageImpl<>(liste, pageable, liste.size());
         return pagem;
     }

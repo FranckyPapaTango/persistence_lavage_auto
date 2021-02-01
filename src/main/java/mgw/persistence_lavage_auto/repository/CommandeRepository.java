@@ -20,12 +20,12 @@ public interface CommandeRepository extends JpaRepository<Commande, Long>{
     public List<Commande> findCommandeByKeyWord(@Param("search") String search);
     
     @Query(nativeQuery=true)
-    public List<Commande> findCommandeOfLaveurByKeyWord(@Param("id") long id,@Param("search") String search);
+    public List<Commande> findCommandeOfUtilisateurByKeyWord(@Param("id") long id,@Param("search") String search);
     
-    @Query(nativeQuery=true)// éqivalent à findByIdLaveur
-    public List<Commande> findAllCommandeOfLaveur(@Param("id") long id);
+    @Query(nativeQuery=true)// éqivalent à findByUtilisateurId
+    public List<Commande> findAllCommandeOfUtilisateur(@Param("id") long id);
     
-    public Commande findCommandeByIdLaveur(Long idLaveur);
+
     
 }
 

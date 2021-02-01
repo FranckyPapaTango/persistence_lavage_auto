@@ -5,7 +5,7 @@
  */
 package mgw.persistence_lavage_auto.repository;
 
-import mgw.domaine_lavage_auto.entities.Laveur;
+import mgw.domaine_lavage_auto.entities.Utilisateur;
 import mgw.domaine_lavage_auto.entities.Prestation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

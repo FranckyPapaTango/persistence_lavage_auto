@@ -5,6 +5,8 @@
  */
 package mgw.persistence_lavage_auto.services;
 
+import mgw.domaine_lavage_auto.entities.Facture;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,7 +14,7 @@ package mgw.persistence_lavage_auto.services;
  */
 
 
-import mgw.domaine_lavage_auto.entities.Facture;
+
 import mgw.persistence_lavage_auto.repository.FactureRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,9 +73,9 @@ public class FactureService {
             Facture facture,//from web view fields
             Facture fac) {//from original in DB
         if (facture == null && fac != null) {//cas d'update "direct" à partir de la base originale fac 
-            factureRepository.save(fac);
+            factureRepository.saveAndFlush(fac);
         } else if (fac == null) {//cas de creation : fac est inexistant car il est à créer par saisies nouvelles
-            factureRepository.save(facture);
+            factureRepository.saveAndFlush(facture);
         } else {//cas d'update
             this.facture = fac;//update Facture(libelleFacture, annee, dateDeb, dateFin, detail, paypalId, prix1, prix2, moduleCollection, tjSInscrireCollection);
             fac.setAdresseFacturation(facture.getAdresseFacturation());
@@ -85,6 +87,8 @@ public class FactureService {
             fac.setCssRawColorCode(facture.getCssRawColorCode());
             fac.setDatePersistence(facture.getDatePersistence());            
             fac.setUpdatedVersionDate(facture.getUpdatedVersionDate());
+            factureRepository.saveAndFlush(fac);
+            factureRepository.flush();
            
         }
     }
